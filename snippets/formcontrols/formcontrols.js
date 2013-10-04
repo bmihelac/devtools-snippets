@@ -8,6 +8,7 @@
 
   for (var i = 0, len = forms.length; i < len; i++) {
     var tab = [ ];
+    var json = {};
 
     console.group("HTMLForm \"" + forms[i].name + "\": " + forms[i].action);
     console.log("Element:", forms[i], "\nName:    "+forms[i].name+"\nMethod:  "+forms[i].method.toUpperCase()+"\nAction:  "+forms[i].action || "null");
@@ -21,10 +22,14 @@
           "Value": node.value,
           "Pretty Value": (isNaN(node.value) || node.value === "" ? node.value : parseFloat(node.value))
         });
+        if (node.type != "reset") {
+            json[node.name] = node.value;
+        }
       });
     });
 
     console.table(tab);
+    console.log(JSON.stringify(json, null, 4));
     console.groupEnd();
   }
 })();
